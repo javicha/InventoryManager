@@ -22,7 +22,7 @@ namespace Inventory.Domain.Entities
         /// <summary>
         /// Type of product
         /// </summary>
-        public int TypeId { get; private set; }
+        public int? TypeId { get; private set; }
         /// <summary>
         /// Base price of the product. Guidance in order to compare prices with different suppliers
         /// </summary>
@@ -30,7 +30,7 @@ namespace Inventory.Domain.Entities
         /// <summary>
         /// Product manufacturer
         /// </summary>
-        public int ManufacturerId { get; private set; }
+        public int? ManufacturerId { get; private set; }
         /// <summary>
         /// Number of units
         /// </summary>
@@ -42,7 +42,7 @@ namespace Inventory.Domain.Entities
         /// <summary>
         /// Product supplier
         /// </summary>
-        public int SupplierId { get; private set; }
+        public int? SupplierId { get; private set; }
         /// <summary>
         /// Product receipt date
         /// </summary>
@@ -60,14 +60,13 @@ namespace Inventory.Domain.Entities
         /// </summary>
         public DateTime? ExpirationDate { get; private set; }
 
-
-        public Product(string name, string reference, string description, int typeId, decimal? basePrice, int manufacturerId, int numUnits, 
-            int? minStock, int supplierId, DateTime receiptDate, DateTime? openingDate, DateTime? exhaustionDate, DateTime? expirationDate,
-            string userCreated, DateTime dateCreated, byte[] rowVersion) : base(userCreated, dateCreated, rowVersion)
+        public Product(string name, string reference, string description, int? typeId, decimal? basePrice, int? manufacturerId, int numUnits, 
+            int? minStock, int? supplierId, DateTime receiptDate, DateTime? openingDate, DateTime? exhaustionDate, DateTime? expirationDate,
+            string userCreated) : base(userCreated)
         {
-            Name = name;
-            Reference = reference;
-            Description = description;
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Reference = reference ?? throw new ArgumentNullException(nameof(reference));
+            Description = description ?? throw new ArgumentNullException(nameof(description));
             TypeId = typeId;
             BasePrice = basePrice;
             ManufacturerId = manufacturerId;

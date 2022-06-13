@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Inventory.Domain.Common
+﻿namespace Inventory.Domain.Common
 {
     /// <summary>
     /// Class with the fields common to all domain entities (for example unique identifier or audit data)
@@ -14,17 +12,20 @@ namespace Inventory.Domain.Common
         public DateTime DateModified { get; set; }
         public string? UserDeleted { get; set; }
         public DateTime? DateDeleted { get; set; }
-        [Timestamp]
-        public byte[] RowVersion { get; private set; } //Concurrency management
 
+        
+         //We could manage concurrency with the RowVersion property. For simplicity it is omitted from this technical test
+         //[Timestamp]
+         //public byte[] RowVersion { get; private set; }
+         
 
-        public EntityBase(string userCreated, DateTime dateCreated, byte[] rowVersion)
+        public EntityBase(string userCreated)
         {
+            DateTime now = DateTime.UtcNow;
             UserCreated = userCreated;
-            DateCreated = dateCreated;
+            DateCreated = now;
             UserModified = userCreated;
-            DateModified = dateCreated;
-            RowVersion = rowVersion;
+            DateModified = now;
         }
     }
 }
