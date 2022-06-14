@@ -10,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Register all the Application and Infrastructure layers services 
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
 

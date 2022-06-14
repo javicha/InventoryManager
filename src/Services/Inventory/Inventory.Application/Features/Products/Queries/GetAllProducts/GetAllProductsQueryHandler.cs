@@ -32,7 +32,7 @@ namespace Inventory.Application.Features.Products.Queries.GetAllProducts
         {
             _logger.LogInformation("Start handler - GetAllProductsQueryHandler");
 
-            var productList = await _productRepository.GetAllAsync();
+            var productList = await _productRepository.GetAllProductsPagAsync(request.Page, request.Size, request.FilterText);
             return _mapper.Map<List<ProductDTO>>(productList);
         }
     }

@@ -49,14 +49,6 @@ namespace Inventory.Application.Features.Products.Commands.AddProduct
         /// </summary>
         public DateTime ReceiptDate { get; set; }
         /// <summary>
-        /// Product opening date
-        /// </summary>
-        public DateTime? OpeningDate { get; set; }
-        /// <summary>
-        /// Product exhaustion date
-        /// </summary>
-        public DateTime? ExhaustionDate { get; set; }
-        /// <summary>
         /// Product expiration date
         /// </summary>
         public DateTime? ExpirationDate { get; set; }
@@ -64,5 +56,23 @@ namespace Inventory.Application.Features.Products.Commands.AddProduct
         /// User creating the record
         /// </summary>
         public string UserCreated { get; set; }
+
+
+        public AddProductCommand(string name, string reference, string description, ProductTypeEnum? type, decimal? basePrice, ProductManufacturerEnum? manufacturer, 
+            int numUnits, int? minStock, ProductSupplierEnum? supplier, DateTime receiptDate, DateTime? expirationDate, string userCreated)
+        {
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            Reference = reference ?? throw new ArgumentNullException(nameof(reference));
+            Description = description ?? throw new ArgumentNullException(nameof(description));
+            Type = type;
+            BasePrice = basePrice;
+            Manufacturer = manufacturer;
+            NumUnits = numUnits;
+            MinStock = minStock;
+            Supplier = supplier;
+            ReceiptDate = receiptDate;
+            ExpirationDate = expirationDate;
+            UserCreated = userCreated ?? throw new ArgumentNullException(nameof(userCreated));
+        }
     }
 }

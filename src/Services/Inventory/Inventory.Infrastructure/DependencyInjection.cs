@@ -1,4 +1,9 @@
-﻿using Inventory.Application.Contracts.Persistence;
+﻿using Inventory.Application.Contracts.Infrastructure;
+using Inventory.Application.Contracts.Persistence;
+using Inventory.Infrastructure.Mail;
+using Inventory.Infrastructure.Persistence;
+using Inventory.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Inventory.Infrastructure
@@ -15,8 +20,13 @@ namespace Inventory.Infrastructure
         /// <returns></returns>
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
-            //services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));
-            //services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddDbContext<InventoryContext>(options =>
+                options.UseInMemoryDatabase(databaseName: "GoalSystems_Inventory"));
+
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>)); //Per-request lifecycle
+            services.AddScoped<IProductRepository, ProductRepository>(); //Per-request lifecycle
+
+            services.AddTransient<IEmailService, EmailService>(); //each time the service is requested, a new instance is created
 
             return services;
         }

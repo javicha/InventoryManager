@@ -12,7 +12,7 @@ namespace Inventory.Application.Contracts.Persistence
         /// </summary>
         /// <param name="name">Exact name of the product</param>
         /// <returns>The product, if exists. Null otherwise</returns>
-        Task<Product> GetByName(string name);
+        Task<Product?> GetByName(string name);
 
         /// <summary>
         /// Check if a product exists from its name
@@ -20,5 +20,14 @@ namespace Inventory.Application.Contracts.Persistence
         /// <param name="name">Exact name of the product</param>
         /// <returns>True if the product exists. False otherwise</returns>
         Task<bool> ExistByName(string name);
+
+        /// <summary>
+        /// Get the paginated list of all the products in the inventory
+        /// </summary>
+        /// <param name="startIndex">Number of page to retrieve</param>
+        /// <param name="count">Size of page</param>
+        /// <param name="text">Text to filter</param>
+        /// <returns></returns>
+        Task<Tuple<List<Product>, int>> GetAllProductsPagAsync(int startIndex, int count, string text);
     }
 }

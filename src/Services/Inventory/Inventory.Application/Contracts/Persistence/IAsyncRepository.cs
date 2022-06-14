@@ -26,7 +26,7 @@ namespace Inventory.Application.Contracts.Persistence
 		/// </summary>
 		/// <param name="id">Entity identifier</param>
 		/// <returns>The entity retrieved</returns>
-		Task<T> GetByIdAsync(int id);
+		Task<T?> GetByIdAsync(int id);
 
 		/// <summary>
 		/// Persist an entity in the database
@@ -47,5 +47,13 @@ namespace Inventory.Application.Contracts.Persistence
 		/// <param name="entity">Entity to delete in database</param>
 		/// <returns></returns>
 		Task DeleteAsync(T entity);
+
+		/// <summary>
+		/// Sof delete for entity. It does not delete the entity from the database. It only sets a deletion date
+		/// </summary>
+		/// <param name="entity">Entity to remove</param>
+		/// <param name="userName">User performing the deletion</param>
+		/// <returns></returns>
+		Task SoftDeleteAsync(T entity, string userName);
 	}
 }

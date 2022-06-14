@@ -8,5 +8,10 @@ namespace Inventory.Application.Features.Products.Commands.RemoveProductByName
     public class RemoveProductByNameCommand : IRequest
     {
         public string ProductName { get; set; }
+
+        public RemoveProductByNameCommand(string productName)
+        {
+            ProductName = productName ?? throw new ArgumentNullException(nameof(productName));
+        }
     }
 }

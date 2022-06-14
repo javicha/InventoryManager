@@ -24,16 +24,15 @@ namespace Inventory.API.Controllers
 
         /// <summary>
         /// Obtains all the products of the inventory. 
-        /// For simplicity, paging and sorting is not implemented
+        /// For simplicity, sorting is not implemented, only paging
         /// </summary>
         /// <returns></returns>
         [HttpGet(Name = "GetInventoryProducts")]
         [ProducesResponseType(typeof(IEnumerable<ProductDTO>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProducts()
+        public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProducts([FromQuery] GetAllProductsQuery query)
         {
             _logger.LogInformation("InventoryController - GetAllProducts");
 
-            var query = new GetAllProductsQuery();
             var orders = await _mediator.Send(query); //Mediator is responsible for sending each query/command to its corresponding handler
             return Ok(orders);
         }
@@ -66,7 +65,7 @@ namespace Inventory.API.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult> DeleteOrder([Required] string productName)
         {
-            var command = new RemoveProductByNameCommand() { ProductName = productName };
+            var command = new RemoveProductByNameCommand(productName);
             await _mediator.Send(command);
             return NoContent();
         }

@@ -48,20 +48,12 @@ namespace Inventory.Domain.Entities
         /// </summary>
         public DateTime ReceiptDate { get; private set; }
         /// <summary>
-        /// Product opening date
-        /// </summary>
-        public DateTime? OpeningDate { get; private set; }
-        /// <summary>
-        /// Product exhaustion date
-        /// </summary>
-        public DateTime? ExhaustionDate { get; private set; }
-        /// <summary>
         /// Product expiration date
         /// </summary>
         public DateTime? ExpirationDate { get; private set; }
 
         public Product(string name, string reference, string description, int? typeId, decimal? basePrice, int? manufacturerId, int numUnits, 
-            int? minStock, int? supplierId, DateTime receiptDate, DateTime? openingDate, DateTime? exhaustionDate, DateTime? expirationDate,
+            int? minStock, int? supplierId, DateTime receiptDate, DateTime? expirationDate,
             string userCreated) : base(userCreated)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
@@ -74,8 +66,6 @@ namespace Inventory.Domain.Entities
             MinStock = minStock;
             SupplierId = supplierId;
             ReceiptDate = receiptDate;
-            OpeningDate = openingDate;
-            ExhaustionDate = exhaustionDate;
             ExpirationDate = expirationDate;
         }
     }
