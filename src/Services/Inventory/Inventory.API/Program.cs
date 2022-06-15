@@ -1,6 +1,7 @@
 using Inventory.API.Extensions;
 using Inventory.Application;
 using Inventory.Infrastructure;
+using Inventory.Infrastructure.Middleware;
 using Inventory.Infrastructure.Persistence;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
@@ -27,6 +28,27 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 1safsfsdfdfd\"",
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme {
+                Reference = new OpenApiReference {
+                    Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+   
     //We configure Swagger to use the documentation XML file
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -46,6 +68,7 @@ app.PopulateDatabase<InventoryContext>((context, services) =>
 );
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<JwtMiddleware>(); //Authentication middleware in order to securize API
 app.UseSwagger();
 app.UseSwaggerUI(s =>
 {

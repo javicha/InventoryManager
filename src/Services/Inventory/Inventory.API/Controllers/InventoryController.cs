@@ -1,6 +1,7 @@
 ﻿using Inventory.Application.Features.Products.Commands.AddProduct;
 using Inventory.Application.Features.Products.Commands.RemoveProductByName;
 using Inventory.Application.Features.Products.Queries.GetAllProducts;
+using Inventory.Infrastructure.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +11,7 @@ namespace Inventory.API.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [AuthorizeAttribute]
     public class InventoryController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -61,13 +63,14 @@ namespace Inventory.API.Controllers
         {
             _logger.LogInformation($"InventoryController - AddProductToInventory - {Newtonsoft.Json.JsonConvert.SerializeObject(command)}");
 
+            var userName = HttpContext.Items["UserName"];
             var result = await _mediator.Send(command);
             return Ok(result);
         }
 
 
         /// <summary>
-        /// Remove a product from the inventoy by name
+        /// Remove a product from the inventory by name
         /// </summary>
         /// <param name="productName">Exact name of the product</param>
         /// <returns>No content (code 204) if it has been deleted correctly. Error (code 404) if the product does not exist</returns>
