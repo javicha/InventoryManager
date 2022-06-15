@@ -34,7 +34,7 @@ namespace Inventory.Application.Features.Products.Commands.AddProduct
         public async Task<NewProductDTO> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
             var productEntity = _mapper.Map<Product>(request);
-            var newProduct = await _productRepository.AddAsync(productEntity);
+            var newProduct = await _productRepository.AddAsync(productEntity, "javier.val"); //TODO leer usuario del token
 
             _logger.LogInformation($"Product {newProduct.Id} is successfully created.");
 

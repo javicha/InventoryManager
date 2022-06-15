@@ -6,12 +6,12 @@ namespace Inventory.Application.Features.Products.Queries.GetAllProducts
     /// <summary>
     /// CQRS pattern:GetAllProductsQuery query parameters
     /// </summary>
-    public class GetAllProductsQuery : IRequest<List<ProductDTO>>
+    public class GetAllProductsQuery : IRequest<ProductPagedDTO>
     {
         /// <summary>
         /// List search filter. Applies to the name and reference of the product
         /// </summary>
-        public string FilterText { get; set; }
+        public string? FilterText { get; set; }
 
         /// <summary>
         /// Page to retrieve
@@ -24,6 +24,8 @@ namespace Inventory.Application.Features.Products.Queries.GetAllProducts
         /// </summary>
         [Required]
         public int Size { get; set; }
+
+        public GetAllProductsQuery() { }
 
         public GetAllProductsQuery(string filterText, int page, int size)
         {

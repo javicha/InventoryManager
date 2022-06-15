@@ -2,6 +2,7 @@
 
 namespace Inventory.Domain.Entities
 {
+#pragma warning disable CS8618
     /// <summary>
     /// Entity that models a laboratory consumable product
     /// </summary>
@@ -52,9 +53,11 @@ namespace Inventory.Domain.Entities
         /// </summary>
         public DateTime? ExpirationDate { get; private set; }
 
+        public Product() { }
+
         public Product(string name, string reference, string description, int? typeId, decimal? basePrice, int? manufacturerId, int numUnits, 
             int? minStock, int? supplierId, DateTime receiptDate, DateTime? expirationDate,
-            string userCreated) : base(userCreated)
+            string userCreated)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Reference = reference ?? throw new ArgumentNullException(nameof(reference));
@@ -67,6 +70,9 @@ namespace Inventory.Domain.Entities
             SupplierId = supplierId;
             ReceiptDate = receiptDate;
             ExpirationDate = expirationDate;
+            UserCreated = userCreated;
+            UserModified = userCreated;
         }
     }
 }
+#pragma warning restore CS8618

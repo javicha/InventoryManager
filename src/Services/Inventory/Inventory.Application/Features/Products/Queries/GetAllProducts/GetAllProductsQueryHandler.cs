@@ -8,7 +8,7 @@ namespace Inventory.Application.Features.Products.Queries.GetAllProducts
     /// <summary>
     /// CQRS pattern: GetAllProductsQuery query handler
     /// </summary>
-    public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, List<ProductDTO>>
+    public class GetAllProductsQueryHandler : IRequestHandler<GetAllProductsQuery, ProductPagedDTO>
     {
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
@@ -28,12 +28,13 @@ namespace Inventory.Application.Features.Products.Queries.GetAllProducts
         /// <param name="request">No params needed in this case</param>
         /// <param name="cancellationToken"></param>
         /// <returns>The list with all the products in the inventory</returns>
-        public async Task<List<ProductDTO>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
+        public async Task<ProductPagedDTO> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Start handler - GetAllProductsQueryHandler");
 
             var productList = await _productRepository.GetAllProductsPagAsync(request.Page, request.Size, request.FilterText);
-            return _mapper.Map<List<ProductDTO>>(productList);
+            var productsDTO = _mapper.Map<List<ProductDTO>>(productList.Item1);
+            return new ProductPagedDTO(productList.Item2, request.Page, request.Size, productsDTO);
         }
     }
 }

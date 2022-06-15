@@ -1,5 +1,6 @@
 ﻿using Inventory.Application.Common.Enums;
 using MediatR;
+using System.ComponentModel.DataAnnotations;
 
 namespace Inventory.Application.Features.Products.Commands.AddProduct
 {
@@ -11,10 +12,12 @@ namespace Inventory.Application.Features.Products.Commands.AddProduct
         /// <summary>
         /// Product comercial name
         /// </summary>
+        [Required]
         public string Name { get; set; }
         /// <summary>
         /// Product reference
         /// </summary>
+        [Required]
         public string Reference { get; set; }
         /// <summary>
         /// Product description
@@ -23,6 +26,7 @@ namespace Inventory.Application.Features.Products.Commands.AddProduct
         /// <summary>
         /// Type of product
         /// </summary>
+        [Required]
         public ProductTypeEnum? Type { get; set; }
         /// <summary>
         /// Base price of the product. Guidance in order to compare prices with different suppliers
@@ -52,14 +56,10 @@ namespace Inventory.Application.Features.Products.Commands.AddProduct
         /// Product expiration date
         /// </summary>
         public DateTime? ExpirationDate { get; set; }
-        /// <summary>
-        /// User creating the record
-        /// </summary>
-        public string UserCreated { get; set; }
 
 
         public AddProductCommand(string name, string reference, string description, ProductTypeEnum? type, decimal? basePrice, ProductManufacturerEnum? manufacturer, 
-            int numUnits, int? minStock, ProductSupplierEnum? supplier, DateTime receiptDate, DateTime? expirationDate, string userCreated)
+            int numUnits, int? minStock, ProductSupplierEnum? supplier, DateTime receiptDate, DateTime? expirationDate)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Reference = reference ?? throw new ArgumentNullException(nameof(reference));
@@ -72,7 +72,6 @@ namespace Inventory.Application.Features.Products.Commands.AddProduct
             Supplier = supplier;
             ReceiptDate = receiptDate;
             ExpirationDate = expirationDate;
-            UserCreated = userCreated ?? throw new ArgumentNullException(nameof(userCreated));
         }
     }
 }

@@ -23,11 +23,12 @@ namespace Inventory.API.Controllers
 
 
         /// <summary>
-        /// Obtains all the products of the inventory. 
-        /// For simplicity, sorting is not implemented, only paging
+        /// Obtains all the products of the inventory. For simplicity, sorting is not implemented, only paging
         /// </summary>
-        /// <returns></returns>
-        [HttpGet(Name = "GetInventoryProducts")]
+        /// <param name="query">Search filter and paging parameters</param>
+        /// <returns>The paginated list of all inventory products</returns>
+        [HttpGet]
+        [Route("GetProducts")]
         [ProducesResponseType(typeof(IEnumerable<ProductDTO>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProducts([FromQuery] GetAllProductsQuery query)
         {
@@ -39,11 +40,22 @@ namespace Inventory.API.Controllers
 
 
         /// <summary>
-        /// Adds a product to inventory
+        /// Adds a product to inventory. Name, Reference and Type are required. NumUnits must be greater than 0.
         /// </summary>
+        /// <remarks>
+        /// In order to simplify model, the following product data is modeled with an enum, indicating the possible values:
+        /// 
+        /// Possible product types: Primer = 0, PrimerKit = 1, ProbeKit = 2, BarcodeKit = 3
+        /// 
+        /// Possible manufacturers: Agilent = 0, Roche = 1
+        /// 
+        /// Possible suppliers: Supplier1 = 0, Supplier2 = 1, Supplier3 = 2
+        /// 
+        /// </remarks>
         /// <param name="command">Input parameter with product data</param>
         /// <returns>Information about the newly added product, such as its identifier or name</returns>
-        [HttpPost(Name = "AddProduct")]
+        [HttpPost]
+        [Route("AddProduct")]
         [ProducesResponseType(typeof(NewProductDTO), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> AddProductToInventory([FromBody] AddProductCommand command)
         {
@@ -59,7 +71,8 @@ namespace Inventory.API.Controllers
         /// </summary>
         /// <param name="productName">Exact name of the product</param>
         /// <returns>No content (code 204) if it has been deleted correctly. Error (code 404) if the product does not exist</returns>
-        [HttpDelete("{productName}", Name = "DeleteProduct")]
+        [HttpDelete]
+        [Route("RemoveProduct")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]

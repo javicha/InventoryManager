@@ -1,5 +1,6 @@
 ﻿namespace Inventory.Domain.Common
 {
+#pragma warning disable CS8618
     /// <summary>
     /// Class with the fields common to all domain entities (for example unique identifier or audit data)
     /// </summary>
@@ -17,15 +18,7 @@
          //We could manage concurrency with the RowVersion property. For simplicity it is omitted from this technical test
          //[Timestamp]
          //public byte[] RowVersion { get; private set; }
-         
-
-        public EntityBase(string userCreated)
-        {
-            DateTime now = DateTime.UtcNow;
-            UserCreated = userCreated;
-            DateCreated = now;
-            UserModified = userCreated;
-            DateModified = now;
-        }
+        
     }
 }
+#pragma warning restore CS8618

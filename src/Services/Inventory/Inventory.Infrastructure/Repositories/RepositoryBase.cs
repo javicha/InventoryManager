@@ -24,8 +24,9 @@ namespace Inventory.Infrastructure.Repositories
         /// </summary>
         /// <param name="entity">Given entity</param>
         /// <returns></returns>
-        public async Task<T> AddAsync(T entity)
+        public async Task<T> AddAsync(T entity, string userName)
         {
+            entity.SetInsertAuditParams(userName);
             _inventoryContext.Set<T>().Add(entity);
             await _inventoryContext.SaveChangesAsync();
             return entity;
@@ -51,7 +52,8 @@ namespace Inventory.Infrastructure.Repositories
         public async Task SoftDeleteAsync(T entity, string userName)
         {
             entity.SetDeleteAuditParams(userName);
-            await UpdateAsync(entity);
+            _inventoryContext.Entry(entity).State = EntityState.Modified;
+            await _inventoryContext.SaveChangesAsync();
         }
 
         /// <summary>
@@ -88,8 +90,9 @@ namespace Inventory.Infrastructure.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task UpdateAsync(T entity)
+        public async Task UpdateAsync(T entity, string userName)
         {
+            entity.SetUpdateAuditParams(userName);
             _inventoryContext.Entry(entity).State = EntityState.Modified;
             await _inventoryContext.SaveChangesAsync();
         }

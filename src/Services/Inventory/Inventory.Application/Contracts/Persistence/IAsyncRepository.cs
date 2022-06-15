@@ -33,13 +33,13 @@ namespace Inventory.Application.Contracts.Persistence
 		/// </summary>
 		/// <param name="entity">Entity to persist in database</param>
 		/// <returns>The entity created</returns>
-		Task<T> AddAsync(T entity);
+		Task<T> AddAsync(T entity, string userName);
 
 		/// <summary>
 		/// Update the data of an entity in the database
 		/// </summary>
 		/// <param name="entity">Entity to update in database</param>
-		Task UpdateAsync(T entity);
+		Task UpdateAsync(T entity, string userName);
 
 		/// <summary>
 		/// Delete an entity in the database

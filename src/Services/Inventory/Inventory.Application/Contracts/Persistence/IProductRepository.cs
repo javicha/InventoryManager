@@ -28,6 +28,6 @@ namespace Inventory.Application.Contracts.Persistence
         /// <param name="count">Size of page</param>
         /// <param name="text">Text to filter</param>
         /// <returns></returns>
-        Task<Tuple<List<Product>, int>> GetAllProductsPagAsync(int startIndex, int count, string text);
+        Task<Tuple<List<Product>, int>> GetAllProductsPagAsync(int startIndex, int count, string? text);
     }
 }

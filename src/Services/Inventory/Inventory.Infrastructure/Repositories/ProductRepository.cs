@@ -21,11 +21,11 @@ namespace Inventory.Infrastructure.Repositories
             return _inventoryContext.Products.Where(x => x.Name.ToLower() == name && x.DateDeleted == null).FirstOrDefaultAsync();
         }
 
-        public async Task<Tuple<List<Product>, int>> GetAllProductsPagAsync(int startIndex, int count, string text)
+        public async Task<Tuple<List<Product>, int>> GetAllProductsPagAsync(int startIndex, int count, string? text)
         {
             IQueryable<Product> resultTemp = _inventoryContext.Products.Where(p => p.DateDeleted == null).AsQueryable();
 
-            if (!String.IsNullOrWhiteSpace(text))
+            if (!string.IsNullOrWhiteSpace(text))
             {
                 string searchText = text.Trim().ToLower();
                 resultTemp = resultTemp.Where(x => x.Name.ToLower().Contains(searchText) || x.Reference.ToLower().Contains(searchText));
@@ -35,7 +35,7 @@ namespace Inventory.Infrastructure.Repositories
 
             resultTemp = resultTemp.OrderBy(x => x.Name);
            
-            resultTemp = resultTemp.Skip(startIndex).Take(count);
+            resultTemp = resultTemp.Skip(count * (startIndex - 1)).Take(count);
             var result = new Tuple<List<Product>, int>(await resultTemp.ToListAsync(), cnt);
 
             return result;

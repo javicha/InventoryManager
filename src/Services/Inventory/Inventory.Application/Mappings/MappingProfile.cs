@@ -28,7 +28,6 @@ namespace Inventory.Application.Mappings
                 .ForMember(d => d.ManufacturerId, opts => opts.MapFrom(s => s.Manufacturer != null ? (int)s.Manufacturer : (int?)null))
                 .ForMember(d => d.ExpirationDate, opts => opts.MapFrom(s => s.ExpirationDate))
                 .ForMember(d => d.Reference, opts => opts.MapFrom(s => s.Reference))
-                .ForMember(d => d.UserCreated, opts => opts.MapFrom(s => s.UserCreated))
                 .ForMember(d => d.BasePrice, opts => opts.MapFrom(s => s.BasePrice))
                 .ForMember(d => d.Description, opts => opts.MapFrom(s => s.Description))
                 .ForMember(d => d.MinStock, opts => opts.MapFrom(s => s.MinStock))

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Inventory.Application.Exceptions;
+using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace Inventory.Application.Behaviours
@@ -25,6 +26,11 @@ namespace Inventory.Application.Behaviours
             try
             {
                 return await next();
+            }
+            catch(ValidationException valEx)
+            {
+                //return StatusCode(422, valEx.Errors);
+                throw;
             }
             catch (Exception ex)
             {

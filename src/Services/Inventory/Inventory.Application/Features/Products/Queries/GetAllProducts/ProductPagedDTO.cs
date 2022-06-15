@@ -3,6 +3,40 @@
     /// <summary>
     /// DTO object with the Product information customized for the presentation layer
     /// </summary>
+    public class ProductPagedDTO
+    {
+        /// <summary>
+        /// Total number of products in inventory
+        /// </summary>
+        public int TotalProducts { get; set; }
+
+        /// <summary>
+        /// Current page retrieved
+        /// </summary>
+        public int CurrentPage { get; set; }
+
+        /// <summary>
+        /// Page size
+        /// </summary>
+        public int PageSize { get; set; }
+
+        /// <summary>
+        /// List of products retrieved
+        /// </summary>
+        public List<ProductDTO> Products { get; set; }
+
+        public ProductPagedDTO(int totalProducts, int currentPage, int pageSize, List<ProductDTO> products)
+        {
+            TotalProducts = totalProducts;
+            CurrentPage = currentPage;
+            PageSize = pageSize;
+            Products = products ?? throw new ArgumentNullException(nameof(products));
+        }
+    }
+
+    /// <summary>
+    /// Product information customized for the Presentation layer
+    /// </summary>
     public class ProductDTO
     {
         /// <summary>
@@ -37,6 +71,6 @@
         /// Product expiration date
         /// </summary>
         public DateTime? ExpirationDate { get; set; }
-
     }
+
 }

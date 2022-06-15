@@ -6,14 +6,14 @@ namespace Inventory.Application.Features.Products.Commands.AddProduct
     /// <summary>
     /// CQRS pattern: Pre processor behavior. Validator for AddProductCommand (we use fluent validation)
     /// </summary>
-    public class AddProductCommandValidator : AbstractValidator<AddProductCommand>
+    public class GetAllProductsQueryValidator : AbstractValidator<AddProductCommand>
     {
         private readonly IProductRepository _productRepository;
 
         /// <summary>
         /// Using constructor to provide the properties validations
         /// </summary>
-        public AddProductCommandValidator(IProductRepository productRepository)
+        public GetAllProductsQueryValidator(IProductRepository productRepository)
         {
             _productRepository = productRepository;
 
