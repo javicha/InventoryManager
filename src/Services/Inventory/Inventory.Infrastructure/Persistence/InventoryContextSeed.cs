@@ -26,7 +26,7 @@ namespace Inventory.Infrastructure.Persistence
                 new Product("Sondas MLPA", "S-665T", "Sondas para para captura de amplicón por técnica MLPA", 2, null, 2, 2, 1, 0, DateTime.Today, DateTime.Today.AddYears(2), "javier.val"),
                 new Product("Primer TTN", "Pr-TTN-01", "Primers FW y RV para fragmento TTN", 0, 50, 0, 1, null, 2, DateTime.Today.AddDays(-1), DateTime.Today.AddYears(1), "javier.val"),
                 new Product("Kit de barcodes", "B-55TR", "Kit de barcodes para captura de SNPs", 3, 700, 0, 1, null, 2, DateTime.Today.AddDays(-1), DateTime.Today.AddYears(2), "javier.val"),
-                new Product("Producto que expira", "EX-345345", "Producto de prueba que expirará en 5 minutos", 3, 700, 0, 1, null, 2, DateTime.Today.AddDays(-1), DateTime.Today.AddMinutes(5), "javier.val")
+                new Product("Producto que expira", "EX-345345", "Producto de prueba que expira hoy", 3, 700, 0, 1, null, 2, DateTime.Today.AddDays(-1), DateTime.Today, "javier.val")
             };
         }
     }

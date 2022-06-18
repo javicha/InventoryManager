@@ -29,5 +29,13 @@ namespace Inventory.Application.Contracts.Persistence
         /// <param name="text">Text to filter</param>
         /// <returns></returns>
         Task<Tuple<List<Product>, int>> GetAllProductsPagAsync(int startIndex, int count, string? text);
+
+        /// <summary>
+        /// Method that searches for products that have expired in a given date range.
+        /// </summary>
+        /// <param name="dateFrom">Search start date</param>
+        /// <param name="dateTo">Search end date</param>
+        /// <returns></returns>
+        Task<List<Product>> GetProductsExpiredByDateAsync(DateTime dateFrom, DateTime dateTo);
     }
 }

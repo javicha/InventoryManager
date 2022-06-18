@@ -40,5 +40,13 @@ namespace Inventory.Infrastructure.Repositories
 
             return result;
         }
+
+        public async Task<List<Product>> GetProductsExpiredByDateAsync(DateTime dateFrom, DateTime dateTo)
+        {
+            dateTo = dateTo.AddDays(1);
+
+            var productsExpired = await GetAsync(p => p.ExpirationDate != null && p.ExpirationDate >= dateFrom && p.ExpirationDate <= dateTo);
+            return productsExpired.ToList();
+        }
     }
 }
