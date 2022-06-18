@@ -1,7 +1,9 @@
-﻿using Inventory.Application.Features.Products.Commands.AddProduct;
+﻿using EventBus.Messages.Events.Products;
+using Inventory.Application.Features.Products.Commands.AddProduct;
 using Inventory.Application.Features.Products.Commands.RemoveProductByName;
 using Inventory.Application.Features.Products.Queries.GetAllProducts;
 using Inventory.Infrastructure.Helpers;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -16,13 +18,15 @@ namespace Inventory.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ILogger<InventoryController> _logger;
+        private readonly IPublishEndpoint _publishEndpoint;
+        private string _userName;
 
-        public InventoryController(IMediator mediator, ILogger<InventoryController> logger)
+        public InventoryController(IMediator mediator, ILogger<InventoryController> logger, IPublishEndpoint publishEndpoint)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
         }
-
 
         /// <summary>
         /// Obtains all the products of the inventory. For simplicity, sorting is not implemented, only paging
@@ -34,7 +38,8 @@ namespace Inventory.API.Controllers
         [ProducesResponseType(typeof(IEnumerable<ProductDTO>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProducts([FromQuery] GetAllProductsQuery query)
         {
-            _logger.LogInformation("InventoryController - GetAllProducts");
+            _userName = GetUserName();
+            _logger.LogInformation($"User {_userName} - InventoryController - GetAllProducts");
 
             var orders = await _mediator.Send(query); //Mediator is responsible for sending each query/command to its corresponding handler
             return Ok(orders);
@@ -61,9 +66,10 @@ namespace Inventory.API.Controllers
         [ProducesResponseType(typeof(NewProductDTO), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> AddProductToInventory([FromBody] AddProductCommand command)
         {
-            _logger.LogInformation($"InventoryController - AddProductToInventory - {Newtonsoft.Json.JsonConvert.SerializeObject(command)}");
+            _userName = GetUserName();
+            _logger.LogInformation($"User {_userName} - InventoryController - AddProductToInventory - {Newtonsoft.Json.JsonConvert.SerializeObject(command)}");
 
-            var userName = HttpContext.Items["UserName"];
+            _userName = GetUserName();
             var result = await _mediator.Send(command);
             return Ok(result);
         }
@@ -79,11 +85,26 @@ namespace Inventory.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> DeleteOrder([Required] string productName)
+        public async Task<ActionResult> DeleteProduct([Required] string productName)
         {
+            _userName = GetUserName();
+            _logger.LogInformation($"User {_userName} - InventoryController - DeleteProduct - {productName}");
+
             var command = new RemoveProductByNameCommand(productName);
             await _mediator.Send(command);
+
+            // Ceate ProductRemovedEvent -> Set product info and audit parameters on ProductRemovedEvent eventMessage
+            // Send checkout event to RabbitMQ
+            var eventMessage = new ProductRemovedEvent(productName, _userName, DateTime.UtcNow);
+            await _publishEndpoint.Publish(eventMessage);
+
             return NoContent();
+        }
+
+
+        private string GetUserName()
+        {
+            return (string)HttpContext.Items["UserName"];
         }
     }
 }

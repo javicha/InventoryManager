@@ -5,7 +5,7 @@
     /// </summary>
     public static class EventBusConstants
 	{
-		public const string ProductRemovedQueue = "productRemoved-queue";
-        public const string ProductExpiredQueue = "productExpired-queue";
+		public const string ProductRemovedQueue = "ProductRemoved.Queue";
+        public const string ProductExpiredQueue = "ProductExpired.Queue";
     }
 }

@@ -8,15 +8,23 @@
         /// <summary>
         /// Product comercial name
         /// </summary>
-        public string? Name { get; private set; }
-        /// <summary>
-        /// Product reference
-        /// </summary>
-        public string? Reference { get; private set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// User who removes the product
         /// </summary>
         public string UserDeleted { get; private set; }
+
+        /// <summary>
+        /// Date deleted
+        /// </summary>
+        public DateTime DateDeleted { get; private set; }
+
+        public ProductRemovedEvent(string name, string userDeleted, DateTime dateDeleted)
+        {
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+            UserDeleted = userDeleted ?? throw new ArgumentNullException(nameof(userDeleted));
+            DateDeleted = dateDeleted;
+        }
     }
 }

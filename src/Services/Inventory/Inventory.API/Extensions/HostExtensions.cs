@@ -5,6 +5,13 @@ namespace Inventory.API.Extensions
 #pragma warning disable CS8620, CS8631
     public static class HostExtensions
     {
+        /// <summary>
+        /// Extension method that populates the database with test Product entities on application startup
+        /// </summary>
+        /// <typeparam name="TContext"></typeparam>
+        /// <param name="host"></param>
+        /// <param name="seeder"></param>
+        /// <returns></returns>
         public static IHost PopulateDatabase<TContext>(this IHost host, Action<TContext, IServiceProvider> seeder) where TContext : InventoryContext
         {
             //1. Find the service layer within our scope.
