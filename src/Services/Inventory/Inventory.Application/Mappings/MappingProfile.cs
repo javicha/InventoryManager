@@ -22,6 +22,7 @@ namespace Inventory.Application.Mappings
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
                 .ForMember(d => d.NumUnits, opts => opts.MapFrom(s => s.NumUnits))
                 .ForMember(d => d.Type, opts => opts.MapFrom(s => s.TypeId != null ? Enum.GetName(typeof(ProductTypeEnum), s.TypeId) : string.Empty))
+                .ForMember(d => d.UserCreated, opts => opts.MapFrom(s => s.UserCreated))
                 ;
 
             CreateMap<AddProductCommand, Product>()
@@ -45,6 +46,7 @@ namespace Inventory.Application.Mappings
                 .ForMember(d => d.ExpirationDate, opts => opts.MapFrom(s => s.ExpirationDate))
                 .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
+                .ForMember(d => d.UserCreated, opts => opts.MapFrom(s => s.UserCreated))
                 ;
         }
     }

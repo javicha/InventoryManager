@@ -67,7 +67,7 @@ namespace Inventory.API.Controllers
         [ProducesResponseType(typeof(NewProductDTO), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> AddProductToInventory([FromBody] AddProductCommand command)
         {
-            _userName = HttpContext.GetUserName();
+            _userName = HttpContext.GetUserName(command);
             _logger.LogInformation($"User {_userName} - InventoryController - AddProductToInventory - {Newtonsoft.Json.JsonConvert.SerializeObject(command)}");
 
             var result = await _mediator.Send(command);
@@ -87,10 +87,11 @@ namespace Inventory.API.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult> DeleteProduct([Required] string productName)
         {
-            _userName = HttpContext.GetUserName();
+            var command = new RemoveProductByNameCommand(productName);
+
+            _userName = HttpContext.GetUserName(command);
             _logger.LogInformation($"User {_userName} - InventoryController - DeleteProduct - {productName}");
 
-            var command = new RemoveProductByNameCommand(productName);
             await _mediator.Send(command);
 
             // Ceate ProductRemovedEvent -> Set product info and audit parameters on ProductRemovedEvent eventMessage

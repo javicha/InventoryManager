@@ -1,4 +1,5 @@
-﻿using Inventory.Application.Common.Enums;
+﻿using Application.DTO;
+using Inventory.Application.Common.Enums;
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,7 +8,7 @@ namespace Inventory.Application.Features.Products.Commands.AddProduct
     /// <summary>
     /// CQRS pattern:AddProductCommand command parameters
     /// </summary>
-    public class AddProductCommand : IRequest<NewProductDTO>
+    public class AddProductCommand : CommandBase, IRequest<NewProductDTO>
     {
         /// <summary>
         /// Product comercial name
@@ -56,7 +57,6 @@ namespace Inventory.Application.Features.Products.Commands.AddProduct
         /// Product expiration date
         /// </summary>
         public DateTime? ExpirationDate { get; set; }
-
 
         public AddProductCommand(string name, string reference, string description, ProductTypeEnum? type, decimal? basePrice, ProductManufacturerEnum? manufacturer, 
             int numUnits, int? minStock, ProductSupplierEnum? supplier, DateTime receiptDate, DateTime? expirationDate)

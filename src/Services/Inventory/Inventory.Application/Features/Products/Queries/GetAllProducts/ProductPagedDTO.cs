@@ -71,6 +71,10 @@
         /// Product expiration date
         /// </summary>
         public DateTime? ExpirationDate { get; set; }
+        /// <summary>
+        /// User who has registered the product in the database
+        /// </summary>
+        public string? UserCreated { get; set; }
     }
 
 }

@@ -32,7 +32,7 @@ namespace Inventory.Application.Features.Products.Commands.RemoveProductByName
                 throw new NotFoundException(nameof(Product), request.ProductName);
             }
 
-            await _productRepository.SoftDeleteAsync(productToDelete, "javier.val"); //TODO Get userName from autentication jwt token
+            await _productRepository.SoftDeleteAsync(productToDelete, request.GetUserName());
             _logger.LogInformation($"Product {productToDelete.Id} is successfully deleted.");
 
             return Unit.Value;
