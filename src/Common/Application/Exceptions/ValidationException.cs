@@ -1,6 +1,6 @@
 ﻿using FluentValidation.Results;
 
-namespace Inventory.Application.Exceptions
+namespace Application.Exceptions
 {
     /// <summary>
     /// Exception generated when we have some validation error

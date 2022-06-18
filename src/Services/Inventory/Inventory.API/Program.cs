@@ -1,7 +1,7 @@
+using Application.Middleware;
 using Inventory.API.Extensions;
 using Inventory.Application;
 using Inventory.Infrastructure;
-using Inventory.Infrastructure.Middleware;
 using Inventory.Infrastructure.Persistence;
 using MassTransit;
 using Microsoft.OpenApi.Models;
@@ -82,6 +82,7 @@ app.PopulateDatabase<InventoryContext>((context, services) =>
 
 // Configure the HTTP request pipeline.
 app.UseMiddleware<JwtMiddleware>(); //Authentication middleware in order to securize API
+app.UseMiddleware<ExceptionHandlingMiddleware>(); //Global handling exceptions
 app.UseSwagger();
 app.UseSwaggerUI(s =>
 {

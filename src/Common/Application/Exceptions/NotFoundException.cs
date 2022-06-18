@@ -1,4 +1,4 @@
-﻿namespace Inventory.Application.Exceptions
+﻿namespace Application.Exceptions
 {
     /// <summary>
     /// Exception generated when an entity does not exist in the database

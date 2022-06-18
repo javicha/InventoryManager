@@ -1,8 +1,9 @@
-﻿using EventBus.Messages.Events.Products;
+﻿using Application.Extensions;
+using Application.Helpers;
+using EventBus.Messages.Events.Products;
 using Inventory.Application.Features.Products.Commands.AddProduct;
 using Inventory.Application.Features.Products.Commands.RemoveProductByName;
 using Inventory.Application.Features.Products.Queries.GetAllProducts;
-using Inventory.Infrastructure.Helpers;
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +39,7 @@ namespace Inventory.API.Controllers
         [ProducesResponseType(typeof(IEnumerable<ProductDTO>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<ProductDTO>>> GetAllProducts([FromQuery] GetAllProductsQuery query)
         {
-            _userName = GetUserName();
+            _userName = HttpContext.GetUserName();
             _logger.LogInformation($"User {_userName} - InventoryController - GetAllProducts");
 
             var orders = await _mediator.Send(query); //Mediator is responsible for sending each query/command to its corresponding handler
@@ -66,10 +67,9 @@ namespace Inventory.API.Controllers
         [ProducesResponseType(typeof(NewProductDTO), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<int>> AddProductToInventory([FromBody] AddProductCommand command)
         {
-            _userName = GetUserName();
+            _userName = HttpContext.GetUserName();
             _logger.LogInformation($"User {_userName} - InventoryController - AddProductToInventory - {Newtonsoft.Json.JsonConvert.SerializeObject(command)}");
 
-            _userName = GetUserName();
             var result = await _mediator.Send(command);
             return Ok(result);
         }
@@ -87,7 +87,7 @@ namespace Inventory.API.Controllers
         [ProducesDefaultResponseType]
         public async Task<ActionResult> DeleteProduct([Required] string productName)
         {
-            _userName = GetUserName();
+            _userName = HttpContext.GetUserName();
             _logger.LogInformation($"User {_userName} - InventoryController - DeleteProduct - {productName}");
 
             var command = new RemoveProductByNameCommand(productName);
@@ -99,12 +99,6 @@ namespace Inventory.API.Controllers
             await _publishEndpoint.Publish(eventMessage);
 
             return NoContent();
-        }
-
-
-        private string GetUserName()
-        {
-            return (string)HttpContext.Items["UserName"];
         }
     }
 }

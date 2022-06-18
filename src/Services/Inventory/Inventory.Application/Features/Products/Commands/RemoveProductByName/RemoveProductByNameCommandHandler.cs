@@ -1,6 +1,6 @@
-﻿using AutoMapper;
+﻿using Application.Exceptions;
+using AutoMapper;
 using Inventory.Application.Contracts.Persistence;
-using Inventory.Application.Exceptions;
 using Inventory.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;

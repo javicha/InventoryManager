@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace Inventory.Infrastructure.Helpers
+namespace Application.Helpers
 {
     /// <summary>
     /// Helper class that uses the Nuget package "System.IdentityModel.Tokens.Jwt" to validate the token

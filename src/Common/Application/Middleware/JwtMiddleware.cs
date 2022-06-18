@@ -1,9 +1,9 @@
-﻿using Inventory.Infrastructure.Helpers;
+﻿using Application.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 
-namespace Inventory.Infrastructure.Middleware
+namespace Application.Middleware
 {
     /// <summary>
     /// JWT token-based authentication middleware.

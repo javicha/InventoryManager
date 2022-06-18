@@ -11,7 +11,7 @@ namespace Inventory.Application.Features.Products.Commands.RemoveProductByName
 
         public RemoveProductByNameCommand(string productName)
         {
-            ProductName = productName ?? throw new ArgumentNullException(nameof(productName));
+            ProductName = productName;
         }
     }
 }

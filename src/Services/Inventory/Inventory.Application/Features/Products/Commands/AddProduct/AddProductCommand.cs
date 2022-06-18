@@ -61,9 +61,9 @@ namespace Inventory.Application.Features.Products.Commands.AddProduct
         public AddProductCommand(string name, string reference, string description, ProductTypeEnum? type, decimal? basePrice, ProductManufacturerEnum? manufacturer, 
             int numUnits, int? minStock, ProductSupplierEnum? supplier, DateTime receiptDate, DateTime? expirationDate)
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            Reference = reference ?? throw new ArgumentNullException(nameof(reference));
-            Description = description ?? throw new ArgumentNullException(nameof(description));
+            Name = name;
+            Reference = reference;
+            Description = description;
             Type = type;
             BasePrice = basePrice;
             Manufacturer = manufacturer;
