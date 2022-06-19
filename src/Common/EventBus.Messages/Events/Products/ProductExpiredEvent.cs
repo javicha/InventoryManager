@@ -18,5 +18,12 @@
         /// Product expiration date
         /// </summary>
         public DateTime ExpirationDate { get; private set; }
+
+        public ProductExpiredEvent(string? name, string? reference, DateTime expirationDate)
+        {
+            Name = name;
+            Reference = reference;
+            ExpirationDate = expirationDate;
+        }
     }
 }

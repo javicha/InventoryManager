@@ -1,6 +1,7 @@
-﻿using AutoMapper;
-using Coravel.Invocable;
+﻿using Coravel.Invocable;
+using EventBus.Messages.Events.Products;
 using Inventory.Application.Contracts.Persistence;
+using MassTransit;
 using Microsoft.Extensions.Logging;
 
 namespace Inventory.Infrastructure.ScheduledJobs
@@ -11,29 +12,33 @@ namespace Inventory.Infrastructure.ScheduledJobs
     public class ProductsExpiredJob : IInvocable
     {
         private readonly IProductRepository _productRepository;
-        private readonly IMapper _mapper;
         private readonly ILogger<ProductsExpiredJob> _logger;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public ProductsExpiredJob(IProductRepository productRepository, IMapper mapper, ILogger<ProductsExpiredJob> logger)
+        public ProductsExpiredJob(IProductRepository productRepository, ILogger<ProductsExpiredJob> logger, IPublishEndpoint publishEndpoint)
         {
             _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _publishEndpoint = publishEndpoint ?? throw new ArgumentNullException(nameof(publishEndpoint));
         }
 
         public async Task Invoke()
         {
+            _logger.LogInformation("ProductsExpiredJob started");
+
             //get the expired products in the current day
             var productsExpired = await _productRepository.GetProductsExpiredByDateAsync(DateTime.Today, DateTime.Today);
 
-            if(productsExpired != null)
+            //Note We could optimize performance by publishing the events in parallel, using Parallel.ForEach
+            productsExpired.ForEach(async p =>
             {
-                //Note We could optimize performance by publishing the events in parallel, using Parallel.ForEach
-                productsExpired.ForEach(p =>
-                {
-                    //TODO publish
-                });
-            }
+                // Ceate ProductExpiredEvent -> Set product info on eventMessage
+                // Send checkout event to RabbitMQ
+                var eventMessage = new ProductExpiredEvent(p.Name, p.Reference, p.ExpirationDate.Value);
+                await _publishEndpoint.Publish(eventMessage);
+            });
+
+            _logger.LogInformation($"ProductsExpiredJob finished. Notify {productsExpired.Count} products expired");
         }
     }
 }
