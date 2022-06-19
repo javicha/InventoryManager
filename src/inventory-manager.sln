@@ -26,15 +26,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.Messages", "Common
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Common\Application\Application.csproj", "{501E0288-7ADD-4503-AE01-7A7B4063B065}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Synchro", "Services\Inventory\Inventory.Synchro\Inventory.Synchro\Inventory.Synchro.csproj", "{BC106778-AA45-4AAC-B420-B3A1BB811313}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inventory.Synchro", "Services\Inventory\Inventory.Synchro\Inventory.Synchro\Inventory.Synchro.csproj", "{BC106778-AA45-4AAC-B420-B3A1BB811313}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Laboratory", "Laboratory", "{7316DD36-A994-4FC5-A705-000FE1405609}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Accounting", "Accounting", "{1005C3D5-EADF-4A8F-A87D-8B131AD2BC47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounting.API", "Services\Accounting\Accounting.API\Accounting.API.csproj", "{3582010C-5362-436E-8576-B8043338EE27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounting.API", "Services\Accounting\Accounting.API\Accounting.API.csproj", "{3582010C-5362-436E-8576-B8043338EE27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Laboratory.API", "Services\Laboratory\Laboratory.API\Laboratory.API.csproj", "{FFA8C61A-6504-4A18-9379-64B8677A465A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Laboratory.API", "Services\Laboratory\Laboratory.API\Laboratory.API.csproj", "{FFA8C61A-6504-4A18-9379-64B8677A465A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inventory.Tests", "..\test\Inventory.Tests\Inventory.Tests.csproj", "{8CBECE56-98E5-428D-BA6F-925F1ED0DA9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,6 +80,10 @@ Global
 		{FFA8C61A-6504-4A18-9379-64B8677A465A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFA8C61A-6504-4A18-9379-64B8677A465A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFA8C61A-6504-4A18-9379-64B8677A465A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CBECE56-98E5-428D-BA6F-925F1ED0DA9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CBECE56-98E5-428D-BA6F-925F1ED0DA9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CBECE56-98E5-428D-BA6F-925F1ED0DA9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CBECE56-98E5-428D-BA6F-925F1ED0DA9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
