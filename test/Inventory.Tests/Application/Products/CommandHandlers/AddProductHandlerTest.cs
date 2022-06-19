@@ -9,6 +9,9 @@ using Moq.AutoMock;
 
 namespace Inventory.Tests.Application.Products.CommandHandlers
 {
+    /// <summary>
+    /// Test class to ensure the correct operation of AddProductCommandHandler 
+    /// </summary>
     public class AddProductHandlerTest
     {
         private readonly AutoMocker mocker;
