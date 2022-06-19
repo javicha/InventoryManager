@@ -1,3 +1,5 @@
+using EventBus.Messages.Common;
+using Laboratory.API.EventBusConsumer;
 using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,8 +11,18 @@ builder.Services.AddControllers();
 
 // Add MassTransit and configure it with RabbitMQ connection
 builder.Services.AddMassTransit(config => {
+
+    // Declare the events consumers
+    config.AddConsumer<ProductExpiredConsumer>();
+
     config.UsingRabbitMq((ctx, cfg) => {
         cfg.Host(configuration["EventBusSettings:HostAddress"]);
+
+        //Providing the queues to which each consumer subscribes
+        cfg.ReceiveEndpoint(EventBusConstants.ProductExpiredQueue, c =>
+        {
+            c.ConfigureConsumer<ProductExpiredConsumer>(ctx);
+        });
     });
 });
 

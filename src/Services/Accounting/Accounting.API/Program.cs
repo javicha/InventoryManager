@@ -1,3 +1,5 @@
+using Accounting.API.EventBusConsumer;
+using EventBus.Messages.Common;
 using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,8 +11,18 @@ builder.Services.AddControllers();
 
 // Add MassTransit and configure it with RabbitMQ connection
 builder.Services.AddMassTransit(config => {
+
+    //Declare the events consumers
+    config.AddConsumer<ProductRemovedConsumer>();
+
     config.UsingRabbitMq((ctx, cfg) => {
         cfg.Host(configuration["EventBusSettings:HostAddress"]);
+
+        //Providing the queues to which each consumer subscribes
+        cfg.ReceiveEndpoint(EventBusConstants.ProductRemovedQueue, c =>
+        {
+            c.ConfigureConsumer<ProductRemovedConsumer>(ctx);
+        });
     });
 });
 
