@@ -1,0 +1,32 @@
+version: '3.4'
+
+services:
+  inventory.api:
+    image: ${DOCKER_REGISTRY-}inventoryapi
+    build:
+      context: .
+      dockerfile: Services/Inventory/Inventory.API/Dockerfile
+
+  accounting.api:
+    image: ${DOCKER_REGISTRY-}accountingapi
+    build:
+      context: .
+      dockerfile: Services/Accounting/Accounting.API/Dockerfile
+
+
+  laboratory.api:
+    image: ${DOCKER_REGISTRY-}laboratoryapi
+    build:
+      context: .
+      dockerfile: Services/Laboratory/Laboratory.API/Dockerfile
+
+
+  inventory.synchro:
+    image: ${DOCKER_REGISTRY-}inventorysynchro
+    build:
+      context: .
+      dockerfile: Services/Inventory/Inventory.Synchro/Inventory.Synchro/Dockerfile
+
+  rabbitmq:
+    image: rabbitmq:management-alpine
+
