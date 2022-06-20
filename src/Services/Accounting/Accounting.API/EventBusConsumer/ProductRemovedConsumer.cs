@@ -1,5 +1,6 @@
 ﻿using EventBus.Messages.Events.Products;
 using MassTransit;
+using System.Text.Json;
 
 namespace Accounting.API.EventBusConsumer
 {
@@ -18,7 +19,7 @@ namespace Accounting.API.EventBusConsumer
 
         public Task Consume(ConsumeContext<ProductRemovedEvent> context)
         {
-            _logger.LogInformation($"ProductRemovedConsumer - ProductRemovedEvent consumed - {Newtonsoft.Json.JsonConvert.SerializeObject(context.Message)}");
+            _logger.LogInformation($"ProductRemovedConsumer - ProductRemovedEvent consumed - {JsonSerializer.Serialize(context.Message)}");
 
             /*
              * Note
