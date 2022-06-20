@@ -1,11 +1,11 @@
 ﻿namespace Inventory.Domain.Exceptions
 {
-    [Serializable()]
+    [Serializable]
     public class WrongEmailAddressException : Exception
     {
-        public WrongEmailAddressException() : base() { }
+        public WrongEmailAddressException() { }
         public WrongEmailAddressException(string message) : base(message) { }
-        public WrongEmailAddressException(string message, System.Exception inner) : base(message, inner) { }
+        public WrongEmailAddressException(string message, Exception inner) : base(message, inner) { }
 
         // A constructor is needed for serialization when an
         // exception propagates from a remoting server to the client. 

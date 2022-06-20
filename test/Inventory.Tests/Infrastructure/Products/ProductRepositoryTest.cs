@@ -12,7 +12,7 @@ namespace Inventory.Tests.Infrastructure.Products
     {
         private readonly InventoryContext dbContext;
         private readonly DbContextOptions<InventoryContext> dbContextOptions;
-        private ProductRepository productRepository;
+        private readonly ProductRepository productRepository;
 
         public ProductRepositoryTest()
         {
