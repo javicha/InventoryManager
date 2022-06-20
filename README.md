@@ -86,14 +86,19 @@ We explain the layers in more detail:
 
 
 ## Design patterns and best practices
+
 + CQRS
-+ Loosely coupled
 + Dependency Inversion
 + Dependency Injection
 + Logging
 + Validation
 + Exception handling
 + Authentication
++ Repository
++ Unit of work
++ Testing
++ Implement with SOLID principles in mind
+
 
 ## Third-party Nuget packages
 
@@ -124,3 +129,4 @@ We explain the layers in more detail:
 + Create more tests to achieve full code coverage
 + Implement sorting in GET query
 + Improving performance in event publishing using Parallel.ForEach
++ Implement concurrency control mechanisms in EF Core
