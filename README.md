@@ -54,6 +54,8 @@ We have 4 microservices, with asynchronous communication mechanism through Rabbi
 
 Regarding the folder structure, we have a root folder with the code (src) and another with the tests (test), to separate the deployments from the test projects. Then inside the src folder, we start from the identification of the contexts of our system, and we will create these conceptual divisions within /src/bounded_context packages (for example, src/Inventory, src/Laboratory, src/Accounting). If within each context, we identify several modules, we can in turn create subdivisions by modules (for example Inventory/Product).
 
+![folder_structure](https://user-images.githubusercontent.com/3404380/174668806-e1d28fb9-a0b3-4dd0-b9d1-c7f2301f5015.png)
+
 
 ## Inventory.API architecture
 
