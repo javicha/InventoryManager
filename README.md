@@ -6,8 +6,8 @@ We start from a fictitious case to illustrate the operation of an inventory mana
 
 ## Requirements
 
-+ .NET 6
-+ Docker installed (the application runs in containers)
++  .NET 6
++  Docker installed (the application runs in containers)
 
 ## How to run the application
 
