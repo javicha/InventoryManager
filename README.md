@@ -27,7 +27,6 @@ We start from a fictitious case to illustrate the operation of an inventory mana
 ## Design patterns and best practices
 
 ## Third-party Nuget packages
-
 + **AutoMapper**: A convention-based object-object mapper. We use it to mapping operations between objects.
 + **AutoMapper.Extensions.Microsoft.DependencyInjection**: AutoMapper extensions for ASP.NET Core necessary to register AutoMapper in .NET Core dependency injection tool.
 + **Coravel**: Near-zero config .NET Core library that makes Task Scheduling, Caching, Queuing, Mailing, Event Broadcasting... We use it for the scheduled execution of tasks.
@@ -41,5 +40,12 @@ We start from a fictitious case to illustrate the operation of an inventory mana
 + **Swashbuckle.AspNetCore**: Swagger tools for documenting APIs built on ASP.NET Core
 + **xunit**: xUnit.net is a developer testing framework, built to support Test Driven Development, with a design goal of extreme simplicity and alignment with framework features.
 
+## Assumptions
++ We use an in-memory database for simplicity
++ We only implement unit tests for the use case of adding product to inventory, to illustrate examples in the 3 layers of Clean Architecture
 
 ## Possible improvements
++ Implement resilience mechanisms, such as retries, using for example the Polly library, in those use cases that require it
++ Apply CQRS to handle domain events, just as we are doing to handle use cases
++ Create more tests to achieve full code coverage
++ Implement sorting in GET query
