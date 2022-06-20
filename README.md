@@ -15,7 +15,7 @@ We start from a fictitious case to illustrate the operation of an inventory mana
 + It is a secure API. The following jwt token must be used to authenticate and be able to consume the API: *eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJHb2FsU3lzdGVtcyIsImlhdCI6MTY1NTMyMzM4NiwiZXhwIjoxNjg2ODU5Mzg2LCJhdWQiOiJpbnZlbnRvcnlfbWFuYWdlciIsInN1YiI6InVzZXIudGVzdCIsIlJvbGUiOiJBZG1pbiIsIkVudmlyb25tZW50IjoiU3RhZ2luZyJ9.Vgvf2WGnqAcfM72bxoMJWIKZbfmIGNz-RSFWOtbWRYE*
 
 ## How to stop the application
-+ Run the following Docker command to stop all the containers: **docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml down**
++ Run the following Docker command to stop all the containers: ****
 
 ## Not implemented requirements
 + A frontend has not been implemented to consume the API. All interactions must be done through Swagger (or similar)
@@ -27,5 +27,19 @@ We start from a fictitious case to illustrate the operation of an inventory mana
 ## Design patterns and best practices
 
 ## Third-party Nuget packages
+
++ **AutoMapper**: A convention-based object-object mapper. We use it to mapping operations between objects.
++ **AutoMapper.Extensions.Microsoft.DependencyInjection**: AutoMapper extensions for ASP.NET Core necessary to register AutoMapper in .NET Core dependency injection tool.
++ **Coravel**: Near-zero config .NET Core library that makes Task Scheduling, Caching, Queuing, Mailing, Event Broadcasting... We use it for the scheduled execution of tasks.
++ **FluentValidation**: A validation library for .NET that uses a fluent interface to construct strongly-typed validation rules. We ise it to perform validations when applying CQRS, before execute commands.
++ **FluentValidation.DependencyInjectionExtensions**: Dependency injection extensions for FluentValidation. We use it to being able to register FluentValidation in the NET Core dependency injection tool
++ **MassTransit**: MassTransit is a message-based distributed application framework for .NET. We use it in order to create queues in RabbitMQ, and thus, support asynchronous communication between microservices.
++ **MassTransit.RabbitMQ**: MassTransit RabbitMQ transport support. We use in order to connect to Rabbit MQ message broker.
++ **MediatR.Extensions.Microsoft.DependencyInjection**: MediatR extensions for ASP.NET Core. We use it in order to implement CQRS with Mediator pattern
++ **Moq**: Moq is the most popular and friendly mocking framework for .NET.
++ **Moq.AutoMock**: An auto-mocking container that generates mocks using Moq
++ **Swashbuckle.AspNetCore**: Swagger tools for documenting APIs built on ASP.NET Core
++ **xunit**: xUnit.net is a developer testing framework, built to support Test Driven Development, with a design goal of extreme simplicity and alignment with framework features.
+
 
 ## Possible improvements
