@@ -87,7 +87,6 @@ app.UseSwagger();
 app.UseSwaggerUI(s =>
 {
     s.SwaggerEndpoint("/swagger/v1/swagger.json", "Inventory Manger API - v1");
-    s.RoutePrefix = "api-docs";
 });
 
 app.UseHttpsRedirection();

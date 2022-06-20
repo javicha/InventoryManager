@@ -24,6 +24,8 @@ namespace Inventory.Infrastructure.ScheduledJobs
 
         public async Task Invoke()
         {
+            Thread.Sleep(300000); //Note For illustrative purposes only. Notification is launched 5 minutes after launching the app
+
             _logger.LogInformation("ProductsExpiredJob started");
 
             //get the expired products in the current day
