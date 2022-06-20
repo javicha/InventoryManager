@@ -5,6 +5,7 @@
 We start from a fictitious case to illustrate the operation of an inventory management system. Let's take as an example that we work for a genomic sequencing company, and we need to control the inventory of the consumable products used in the laboratory. We provide a REST API to query, add and remove products. 
 
 ## Requirements
++ .NET 6
 + Docker installed (the application runs in containers)
 
 ## How to run the application
