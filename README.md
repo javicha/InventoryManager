@@ -29,8 +29,8 @@ A view of the global architecture of the application is shown:
 We have 4 microservices, with asynchronous communication mechanism through RabbitMQ:
 + **Inventory.API**: 
 + **Inventory.Synchro**:
-+ **Laboratory.API**: Microservice for illustrative purposes. The only functionality it implements is subscribing to a Rabbit queue to consume the event "ProductExpiredEvent". When we remove a product from the inventory, Inventory.API publishes the event in the corresponding Rabbit queue, and this microservice consumes it and logs a message of the style *ProductExpiredConsumer - ProductExpiredEvent consumed - {event}*. We can see the message event in the logs, executing the command **docker logs laboratory.api** from the command line.
-+ **Accounting.API**:
++ **Laboratory.API**: Microservice for illustrative purposes. The only functionality it implements is subscribing to a Rabbit queue to consume the event "ProductExpiredEvent". Inventory.Synchro publishes the event in the corresponding Rabbit queue, and this microservice consumes it and logs a message of the style *ProductExpiredConsumer - ProductExpiredEvent consumed - {event}*. We can see the message event in the logs, executing the command **docker logs laboratory.api** from the command line. A possible real use case would be to update the laboratory database, to avoid using expired products.
++ **Accounting.API**: Microservice for illustrative purposes. The only functionality it implements is subscribing to a Rabbit queue to consume the event "ProductRemovedEvent". When we remove a product from the inventory, Inventory.API publishes the event in the corresponding Rabbit queue, and this microservice consumes it and logs a message of the style *ProductRemovedConsumer - ProductRemovedEvent consumed - {event}*. We can see the message event in the logs, executing the command **docker logs accounting.api** from the command line.
 
 ## API architecture
 
