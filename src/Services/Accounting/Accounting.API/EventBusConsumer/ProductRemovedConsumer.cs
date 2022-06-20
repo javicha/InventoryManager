@@ -18,7 +18,7 @@ namespace Accounting.API.EventBusConsumer
 
         public Task Consume(ConsumeContext<ProductRemovedEvent> context)
         {
-            _logger.LogInformation($"ProductRemovedConsumer - ProductRemovedEvent consumed - {Newtonsoft.Json.JsonConvert.SerializeObject(context)}");
+            _logger.LogInformation($"ProductRemovedConsumer - ProductRemovedEvent consumed - {Newtonsoft.Json.JsonConvert.SerializeObject(context.Message)}");
 
             /*
              * Note

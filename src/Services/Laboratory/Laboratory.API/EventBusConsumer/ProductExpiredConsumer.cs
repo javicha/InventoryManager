@@ -18,7 +18,7 @@ namespace Laboratory.API.EventBusConsumer
 
         public Task Consume(ConsumeContext<ProductExpiredEvent> context)
         {
-            _logger.LogInformation($"ProductExpiredConsumer - ProductExpiredEvent consumed - {Newtonsoft.Json.JsonConvert.SerializeObject(context)}");
+            _logger.LogInformation($"ProductExpiredConsumer - ProductExpiredEvent consumed - {Newtonsoft.Json.JsonConvert.SerializeObject(context.Message)}");
 
             /*
              * Note
