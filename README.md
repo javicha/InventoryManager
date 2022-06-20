@@ -52,18 +52,30 @@ We have 4 microservices, with asynchronous communication mechanism through Rabbi
 + **Laboratory.API**: Microservice for illustrative purposes (no swagger). The only functionality it implements is subscribing to a Rabbit queue to consume the event "ProductExpiredEvent". Inventory.Synchro publishes the event in the corresponding Rabbit queue, and this microservice consumes it and logs a message of the style *ProductExpiredConsumer - ProductExpiredEvent consumed - {event}*. We can see the message event in the logs, executing the command **docker logs laboratory.api** from the command line. A possible real use case would be to update the laboratory database, to avoid using expired products.
 + **Accounting.API**: Microservice for illustrative purposes (no swagger). The only functionality it implements is subscribing to a Rabbit queue to consume the event "ProductRemovedEvent". When we remove a product from the inventory, Inventory.API publishes the event in the corresponding Rabbit queue, and this microservice consumes it and logs a message of the style *ProductRemovedConsumer - ProductRemovedEvent consumed - {event}*. We can see the message event in the logs, executing the command **docker logs accounting.api** from the command line.
 
+Regarding the folder structure, we have a root folder with the code (src) and another with the tests (test), to separate the deployments from the test projects. Then inside the src folder, we start from the identification of the contexts of our system, and we will create these conceptual divisions within /src/bounded_context packages (for example, src/Inventory, src/Laboratory, src/Accounting). If within each context, we identify several modules, we can in turn create subdivisions by modules (for example Inventory/Product).
+
 
 ## Inventory.API architecture
 
+We design our service following the principles of Clean Architecture DDD. Then, we structure the code in 4 layers:
+
+![clean_architecture](https://user-images.githubusercontent.com/3404380/174666084-23ac18ef-88a5-49e5-abc1-eb64da12fedd.png)
+
+**Inventory.Domain** layer and **Inventory.Application** layer will be the core layers. And we have **Inventory.API** layer, which is the presentation layer, and **Inventory.Infrastructure** layer (we also call Periphery layers). The main idea behind Clean Architecture approach, is to separate the domain code from the application and infrastructure code, so that the core (business logic) of our software can evolve independently of the rest of the components. Regarding the DDD (Domain Drive Design) approach, it proposes a modeling based on business reality according to its use cases. The important thing is to organize the code so that it is aligned with the business problems and uses the same business terms (ubiquitous language). 
+
+We explain the layers in more detail:
+
++ **Inventory.Domain**: It must contain the domain entities and encapsulate their business logic. And should not have dependencies on other application layers.
++ **Inventory.Application**: 
 
 
 ## Inventory.API endpoints
 
 ![inventory_api](https://user-images.githubusercontent.com/3404380/174658196-cfe1cfc4-e4a8-4e71-b462-fa795742e53a.png)
 
-+ /api/v1/Inventory/GetProducts: (GET) Obtains all the products of the inventory, paginated. It is also possible to filter by name.
-+ /api/v1/Inventory/AddProduct: (POST) Adds a product to inventory (if not exists). Name, Reference and Type are required. NumUnits must be greater than 0.
-+ /api/v1/Inventory/RemoveProduct: (DELETE) Remove a product from the inventory by name. Fire the event ProductRemovedEvent
++ **/api/v1/Inventory/GetProducts**: (GET) Obtains all the products of the inventory, paginated. It is also possible to filter by name.
++ **/api/v1/Inventory/AddProduct**: (POST) Adds a product to inventory (if not exists). Name, Reference and Type are required. NumUnits must be greater than 0.
++ **/api/v1/Inventory/RemoveProduct**: (DELETE) Remove a product from the inventory by name. Fire the event ProductRemovedEvent
 
 
 ## Design patterns and best practices
