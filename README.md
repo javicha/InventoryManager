@@ -22,6 +22,15 @@ We start from a fictitious case to illustrate the operation of an inventory mana
 + A frontend has not been implemented to consume the API. All interactions must be done through Swagger (or similar)
 
 ## Solution architecture
+A view of the global architecture of the application is shown:
+
+![inventory_manager_arch](https://user-images.githubusercontent.com/3404380/174642275-01547847-7fb5-428c-a233-d262faeab9f5.png)
+
+We have 4 microservices, with asynchronous communication mechanism through RabbitMQ:
++ **Inventory.API**: 
++ **Inventory.Synchro**:
++ **Laboratory.API**: Microservice for illustrative purposes. The only functionality it implements is subscribing to a Rabbit queue to consume the event "ProductExpiredEvent". When we remove a product from the inventory, Inventory.API publishes the event in the corresponding Rabbit queue, and this microservice consumes it and logs a message of the style *ProductExpiredConsumer - ProductExpiredEvent consumed - {event}*. We can see the message event in the logs, executing the command **docker logs laboratory.api** from the command line.
++ **Accounting.API**:
 
 ## API architecture
 
