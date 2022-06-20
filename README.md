@@ -67,8 +67,13 @@ We design our service following the principles of Clean Architecture DDD. Then, 
 
 We explain the layers in more detail:
 
-+ **Inventory.Domain**: It must contain the domain entities and encapsulate their business logic. And should not have dependencies on other application layers.
-+ **Inventory.Application**: 
++ **Inventory.Domain**: It must contain the domain entities and encapsulate their business logic. And should **not have dependencies** on other application layers.
++ **Inventory.Application**: This layer covers all business use cases, therefore it is responsible for aspects such as business use cases, business validations, business flows, etc. **Work only with abstractions**, delegating implementations to the infrastructure layer. We structure this layer in 3 main folders:
+    - Contracts: represent business requirements. Includes the interfaces and contracts for the application. This folder should cover application capabilities. This should include interfaces for abstracting use cases implementations. We separate contracts into subfolders based on functionality.
+    - Features: represents the business use cases. Includes the application use cases and features. This folder will apply CQRS design pattern for handling business use cases. It will contain a subfolder for each use case. Is the heart of this layer
+    - Behaviours: represents the business validations. Includes the business validations, logging and other crosscutting concerns that apply when performing the use case implementations.
++ **Inventory.Infrastructure**: we perform database operations, email send operations, and all those related to external systems. This layer will include the implementations of the abstractions defined in the Application layer.
++ **Inventory.API**: this layer expose API to external microservices.
 
 
 ## Inventory.API endpoints
