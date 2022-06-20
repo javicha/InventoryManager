@@ -53,6 +53,9 @@ We have 4 microservices, with asynchronous communication mechanism through Rabbi
 + **Accounting.API**: Microservice for illustrative purposes (no swagger). The only functionality it implements is subscribing to a Rabbit queue to consume the event "ProductRemovedEvent". When we remove a product from the inventory, Inventory.API publishes the event in the corresponding Rabbit queue, and this microservice consumes it and logs a message of the style *ProductRemovedConsumer - ProductRemovedEvent consumed - {event}*. We can see the message event in the logs, executing the command **docker logs accounting.api** from the command line.
 + **RabbitMQ**: We can access the Rabbit dashboard at the url http://localhost:7004/, using the default username and password (guest/guest). In this way we can also monitor the queues to see the published events.
 
+![rabbit_queues](https://user-images.githubusercontent.com/3404380/174673944-7dc99542-f33b-4803-82d3-bca77dcb5c8f.png)
+
+
 Regarding the folder structure, we have a root folder with the code (src) and another with the tests (test), to separate the deployments from the test projects. Then inside the src folder, we start from the identification of the contexts of our system, and we will create these conceptual divisions within /src/bounded_context packages (for example, src/Inventory, src/Laboratory, src/Accounting). If within each context, we identify several modules, we can in turn create subdivisions by modules (for example Inventory/Product).
 
 ![folder_structure](https://user-images.githubusercontent.com/3404380/174668806-e1d28fb9-a0b3-4dd0-b9d1-c7f2301f5015.png)
