@@ -39,15 +39,16 @@ A view of the global architecture of the application is shown:
 ![inventory_manager_arch](https://user-images.githubusercontent.com/3404380/174652645-ce286a7f-635c-4ac8-a5da-178280a87ac1.png)
 
 
-We have 4 microservices, with asynchronous communication mechanism through RabbitMQ:
+We have 4 microservices, with asynchronous communication mechanism through RabbitMQ. We manage events through asynchronous communication between microservices, using the MassTransit library (it has native support for Rabbit). The events generate a publish action to RabbitMQ, and another service consumes it. We will create a common class library, to handle the events. In this way, each microservice that needs events will add a reference to this library. Brief description of the services:
+
 + **Inventory.API**: Main microservice. Implement inventory management functionalities. Accessible at the url http://localhost:7000/swagger/index.html. It includes:
     + ASP.NET Core Web API application
     + REST API principles, CRUD operations (except update for simplicity)
-    + Implementing DDD, CQRS, and Clean Architecture with using Best Practices applying SOLID principles. Developing CQRS implementation on commands and queries using MediatR, FluentValidation and AutoMapper packages.
+    + Implementing DDD, CQRS, and Clean Architecture using Best Practices applying SOLID principles. Developing CQRS implementation on commands and queries using MediatR, FluentValidation and AutoMapper packages.
     + InMemory database connection
     + Using Entity Framework Core ORM and database initialization with test Product entities when application startup
     + Publishing RabbitMQ ProductRemovedEvent event queue using MassTransit-RabbitMQ Configuration
-+ **Inventory.Synchro**: Microservice for illustrative purposes. It executes a daily scheduled task (using the Coravel package), which is responsible of searching for the products that expire on the day. In case it finds products, it publishes an ProductExpiredEvent event for each of them.
++ **Inventory.Synchro**: Microservice for illustrative purposes. It executes a daily scheduled task (using the Coravel package), which is responsible of searching for the products that expire on the day. In case it finds products, it publishes an ProductExpiredEvent event in RabbitMQfor each of them.
 + **Laboratory.API**: Microservice for illustrative purposes (no swagger). The only functionality it implements is subscribing to a Rabbit queue to consume the event "ProductExpiredEvent". Inventory.Synchro publishes the event in the corresponding Rabbit queue, and this microservice consumes it and logs a message of the style *ProductExpiredConsumer - ProductExpiredEvent consumed - {event}*. We can see the message event in the logs, executing the command **docker logs laboratory.api** from the command line. A possible real use case would be to update the laboratory database, to avoid using expired products.
 + **Accounting.API**: Microservice for illustrative purposes (no swagger). The only functionality it implements is subscribing to a Rabbit queue to consume the event "ProductRemovedEvent". When we remove a product from the inventory, Inventory.API publishes the event in the corresponding Rabbit queue, and this microservice consumes it and logs a message of the style *ProductRemovedConsumer - ProductRemovedEvent consumed - {event}*. We can see the message event in the logs, executing the command **docker logs accounting.api** from the command line.
 
@@ -55,8 +56,25 @@ We have 4 microservices, with asynchronous communication mechanism through Rabbi
 ## Inventory.API architecture
 
 
-## Design patterns and best practices
 
+## Inventory.API endpoints
+
+![inventory_api](https://user-images.githubusercontent.com/3404380/174658196-cfe1cfc4-e4a8-4e71-b462-fa795742e53a.png)
+
++ /api/v1/Inventory/GetProducts: (GET) Obtains all the products of the inventory, paginated. It is also possible to filter by name.
++ /api/v1/Inventory/AddProduct: (POST) Adds a product to inventory (if not exists). Name, Reference and Type are required. NumUnits must be greater than 0.
++ /api/v1/Inventory/RemoveProduct: (DELETE) Remove a product from the inventory by name. Fire the event ProductRemovedEvent
+
+
+## Design patterns and best practices
++ CQRS
++ Loosely coupled
++ Dependency Inversion
++ Dependency Injection
++ Logging
++ Validation
++ Exception handling
++ Authentication
 
 ## Third-party Nuget packages
 
