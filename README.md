@@ -18,6 +18,8 @@ We start from a fictitious case to illustrate the operation of an inventory mana
 ## How to stop the application
 + Run the following Docker command to stop all the containers: **docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml down**
 
+## How to run test
+
 ## Not implemented requirements
 + A frontend has not been implemented to consume the API. All interactions must be done through Swagger (or similar)
 
@@ -35,7 +37,7 @@ We have 4 microservices, with asynchronous communication mechanism through Rabbi
     + InMemory database connection
     + Using Entity Framework Core ORM and database initialization with test Product entities when application startup
     + Publishing RabbitMQ ProductRemovedEvent event queue with using MassTransit-RabbitMQ Configuration
-+ **Inventory.Synchro**:
++ **Inventory.Synchro**: Microservice for illustrative purposes. It executes a daily scheduled task (using the Coravel package), which is responsible of searching for the products that expire on the day. In case it finds products, it publishes an ProductExpiredEvent event for each of them.
 + **Laboratory.API**: Microservice for illustrative purposes (no swagger). The only functionality it implements is subscribing to a Rabbit queue to consume the event "ProductExpiredEvent". Inventory.Synchro publishes the event in the corresponding Rabbit queue, and this microservice consumes it and logs a message of the style *ProductExpiredConsumer - ProductExpiredEvent consumed - {event}*. We can see the message event in the logs, executing the command **docker logs laboratory.api** from the command line. A possible real use case would be to update the laboratory database, to avoid using expired products.
 + **Accounting.API**: Microservice for illustrative purposes (no swagger). The only functionality it implements is subscribing to a Rabbit queue to consume the event "ProductRemovedEvent". When we remove a product from the inventory, Inventory.API publishes the event in the corresponding Rabbit queue, and this microservice consumes it and logs a message of the style *ProductRemovedConsumer - ProductRemovedEvent consumed - {event}*. We can see the message event in the logs, executing the command **docker logs accounting.api** from the command line.
 
