@@ -2,7 +2,7 @@
 
 ##  Intro
 
-This project illustrates an example microservice implementation with Clean Architecture DDD and CQRS.
+This project illustrates an example of microservice implementation, with async comunication, Clean Architecture DDD and CQRS.
 
 We start from a fictitious case to illustrate the operation of an inventory management system. Let's take as an example that we work for a genomic sequencing company, and we need to control the inventory of the consumable products used in the laboratory. We provide a REST API to query, add and remove products. 
 
