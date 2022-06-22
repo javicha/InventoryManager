@@ -1,4 +1,4 @@
-#  InventoryManager (Goal Systems)
+#  InventoryManager
 
 ##  Intro
 
