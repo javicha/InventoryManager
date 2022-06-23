@@ -32,8 +32,8 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "Inventory",
-        Description = "Goal Systems - Inventory Web API",
+        Title = "Inventory Manager",
+        Description = "Search, add or remove products from the inventory. Secured with JWT token",
         Contact = new OpenApiContact
         {
             Name = "Javier Val",
